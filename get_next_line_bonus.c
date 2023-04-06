@@ -1,64 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ediaz--c <ediaz--c@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 14:03:11 by ediaz--c          #+#    #+#             */
-/*   Updated: 2023/04/06 14:05:47 by ediaz--c         ###   ########.fr       */
+/*   Created: 2023/04/06 15:45:07 by ediaz--c          #+#    #+#             */
+/*   Updated: 2023/04/06 15:45:13 by ediaz--c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_get_line(char *annex_ptr)
 {
 	char	*line;
-	int		index_a;
+	int		i;
 
-	index_a = 0;
+	i = 0;
 	if (!annex_ptr || annex_ptr[0] == '\0')
 		return (NULL);
-	while (annex_ptr[index_a] && annex_ptr[index_a] != '\n')
-		index_a++;
-	if (annex_ptr[index_a] == '\n')
-		index_a++;
-	line = (char *)malloc (sizeof(char) * (index_a + 1));
-	line = ft_memmove(line, annex_ptr, (size_t)index_a);
-	line[index_a] = '\0';
+	while (annex_ptr[i] && annex_ptr[i] != '\n')
+		i++;
+	if (annex_ptr[i] == '\n')
+		i++;
+	line = (char *)malloc (sizeof(char) * (i + 1));
+	line = ft_memmove(line, annex_ptr, (size_t)i);
+	line[i] = '\0';
 	return (line);
 }
 
 static char	*ft_clean_annex(char *annex_ptr)
 {
 	char	*sub;
-	int		index_a;
-	int		index_sub;
+	int		i;
+	int		j;
 
-	index_a = 0;
-	index_sub = 0;
+	i = 0;
+	j = 0;
 	if (annex_ptr == NULL)
 		return (NULL);
-	while (annex_ptr[index_a] && annex_ptr[index_a] != '\n')
-		index_a++;
-	if (annex_ptr[index_a] == '\0')
+	while (annex_ptr[i] && annex_ptr[i] != '\n')
+		i++;
+	if (annex_ptr[i] == '\0')
 	{
 		free(annex_ptr);
 		return (NULL);
 	}
-	sub = (char *)malloc (sizeof(char) * (ft_strlen(annex_ptr) + 1 - index_a));
+	sub = (char *)malloc (sizeof(char) * (ft_strlen(annex_ptr) + 1 - i));
 	if (sub == NULL)
 		return (NULL);
-	index_a++;
-	while (annex_ptr[index_a])
-		sub[index_sub++] = annex_ptr[index_a++];
-	sub[index_sub] = '\0';
+	i++;
+	while (annex_ptr[i])
+		sub[j++] = annex_ptr[i++];
+	sub[j] = '\0';
 	free(annex_ptr);
 	return (sub);
 }
 
-char	*ft_gen_one_line(char **annex_ptr)
+char	*ft_gen_line(char **annex_ptr)
 {
 	char	*line;
 
@@ -71,7 +71,7 @@ char	*ft_gen_one_line(char **annex_ptr)
 
 char	*get_next_line(int fd)
 {
-	static char	*annex;
+	static char	*annex[OPEN_MAX];
 	char		*buffer;
 	int			n_read;
 
@@ -81,19 +81,19 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (buffer == NULL)
 		return (NULL);
-	while (!ft_found_new_line(annex) && n_read != 0)
+	while (!ft_found_new_line(annex[fd]) && n_read != 0)
 	{
 		n_read = (int)read(fd, buffer, BUFFER_SIZE);
 		if (n_read == -1)
 		{	
-			free(annex);
-			annex = NULL;
+			free(annex[fd]);
+			annex[fd] = NULL;
 			free(buffer);
 			return (NULL);
 		}
 		buffer[n_read] = '\0';
-		annex = ft_strjoin(annex, buffer);
+		annex[fd] = ft_strjoin(annex[fd], buffer);
 	}
 	free (buffer);
-	return (ft_gen_one_line(&annex));
+	return (ft_gen_line(&annex[fd]));
 }

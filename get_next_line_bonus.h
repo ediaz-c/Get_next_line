@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ediaz--c <ediaz--c@student.42madrid.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 14:01:33 by ediaz--c          #+#    #+#             */
-/*   Updated: 2023/04/06 14:02:01 by ediaz--c         ###   ########.fr       */
+/*   Created: 2023/04/06 15:45:30 by ediaz--c          #+#    #+#             */
+/*   Updated: 2023/04/06 15:46:05 by ediaz--c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H	
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -26,7 +26,7 @@
 
 // get_next_line.c
 char	*get_next_line(int fd);
-char	*ft_gen_one_line(char **annex_ptr);
+char	*ft_gen_line(char **annex_ptr);
 
 // get_next_line_utils.c
 int		ft_found_new_line(char *str);
