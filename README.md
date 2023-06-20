@@ -3,7 +3,7 @@
 Llamar repetidamente a esta función, leeria todo el contenido de un archivo referenciado por el descriptor</p>
 <br>
 <h2>Prototipo</h2>
-<pre><code>int  get_next_line(int fd)</code></pre>
+<pre><code>char  *get_next_line(int fd)</code></pre>
 <br>
 <h2>Funcionalidad</h2>
 <ul>La función <strong>get_next_line</strong> debe devolver la línea recién leída</ul>
